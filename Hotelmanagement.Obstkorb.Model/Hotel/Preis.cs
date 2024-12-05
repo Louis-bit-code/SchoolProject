@@ -1,11 +1,7 @@
 ﻿namespace Hotelmanagement.Obstkorb.Model.Hotel;
 
-public class Preis
+public class Preis : BaseEntity
 {
-    public Preis(string preis)
-    {
-        Price = preis;
-    }
 
     public Hotelzimmer Zimmernummer { get; set; }
 

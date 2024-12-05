@@ -1,6 +1,6 @@
 ﻿namespace Hotelmanagement.Obstkorb.Model.Hotel;
 
-public class Zusatzoptionen
+public class Zusatzoptionen : BaseEntity
 {
     public string Name { get; set; }
 

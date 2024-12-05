@@ -1,6 +1,6 @@
 ﻿namespace Hotelmanagement.Obstkorb.Model.Freizeitaktivität;
 
-public class Freizeitaktivität
+public class Freizeitaktivität : BaseEntity
 {
     public string Name { get; set; }
 

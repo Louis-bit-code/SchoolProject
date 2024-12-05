@@ -1,6 +1,6 @@
 ﻿namespace Hotelmanagement.Obstkorb.Model.Hotel;
 
-public class Hotelzimmer
+public class Hotelzimmer : BaseEntity
 {
     public int Betten { get; set; }
 

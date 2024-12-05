@@ -1,6 +1,6 @@
 ﻿namespace Hotelmanagement.Obstkorb.Model;
 
-public class Kunde
+public class Kunde : BaseEntity
 {
     public Int32 KundenNummer { get; set; }
 
