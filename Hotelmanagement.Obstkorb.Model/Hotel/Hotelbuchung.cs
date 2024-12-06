@@ -1,6 +1,6 @@
 ﻿namespace Hotelmanagement.Obstkorb.Model.Hotel;
 
-public class Hotelbuchung : BaseEntity
+public class Hotelbuchung : User
 {
 
     public Preis Preis { get; set; }
@@ -8,4 +8,8 @@ public class Hotelbuchung : BaseEntity
     public DateTime Von { get; set; }
 
     public DateTime Bis { get; set; }
+
+    public Boolean Gebucht { get; set; }
+
+    public String UserBuchung { get; set; }
 }

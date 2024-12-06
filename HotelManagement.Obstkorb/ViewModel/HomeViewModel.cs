@@ -9,14 +9,14 @@ namespace HotelManagement.Obstkorb.ViewModel;
 public class HomeViewModel : INotifyPropertyChanged
 {
     private readonly IHotelBuchungStore _bookingStore;
-    private readonly UserContext _userContext;
+    private readonly User _user;
 
-    public ObservableCollection<HotelBuchungen> RoomStatusList { get; set; }
+    public ObservableCollection<Hotelbuchung> RoomStatusList { get; set; }
 
-    public HomeViewModel(IHotelBuchungStore bookingStore, UserContext userContext)
+    public HomeViewModel(IHotelBuchungStore bookingStore, User user)
     {
         _bookingStore = bookingStore;
-        _userContext = userContext;
+        _user = user;
 
         // Initiale Daten laden
         LoadRoomStatuses();
@@ -25,14 +25,14 @@ public class HomeViewModel : INotifyPropertyChanged
     public void LoadRoomStatuses()
     {
         var bookings = _bookingStore.GetAllBookings();
-        var roomStatusList = bookings.Select(booking => new HotelBuchungen
+        var roomStatusList = bookings.Select(booking => new Hotelbuchung
         {
             Id = booking.Id,
-            BookingStatus = booking.UserID == _userContext.UserId ? "Von Ihnen gebucht" : "Gebucht",
-            IsBookedByUser = booking.UserID == _userContext.UserId
+            UserBuchung = Convert.ToBoolean(booking.UserBuchung) ? "Von Ihnen gebucht" : "Gebucht",
+            Gebucht = booking.Gebucht
         }).ToList();
 
-        RoomStatusList = new ObservableCollection<HotelBuchungen>(roomStatusList);
+        RoomStatusList = new ObservableCollection<Hotelbuchung>(roomStatusList);
         OnPropertyChanged(nameof(RoomStatusList));
     }
 
