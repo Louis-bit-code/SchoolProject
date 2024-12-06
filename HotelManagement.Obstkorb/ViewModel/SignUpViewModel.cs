@@ -1,96 +1,105 @@
 ﻿using Hotelmanagement.Obstkorb.DatabaseInterface;
 using System.ComponentModel;
-using System.Text.RegularExpressions;
-using System.Windows.Input;
+using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 using System.Runtime.CompilerServices;
 
-namespace HotelManagement.Obstkorb.ViewModel;
-
-public class SignUpViewModel : INotifyPropertyChanged
+namespace HotelManagement.Obstkorb.ViewModel
 {
-    private readonly IUserStore _userStore;
-
-    private string _username;
-    private string _password;
-    private string _confirmPassword;
-
-    public string Username
+    public class SignUpViewModel : INotifyPropertyChanged
     {
-        get => _username;
-        set
+        private readonly IUserStore _userStore;
+
+        private string _username;
+        private string _password;
+        private string _confirmPassword;
+
+        public string Username
         {
-            _username = value;
-            OnPropertyChanged();
+            get => _username;
+            set
+            {
+                _username = value;
+                OnPropertyChanged();
+                UpdateCanExecute();
+            }
         }
-    }
 
-    public string Password
-    {
-        get => _password;
-        set
+        public string Password
         {
-            _password = value;
-            ValidatePasswordRules();
-            OnPropertyChanged();
-            CommandManager.InvalidateRequerySuggested();
+            get => _password;
+            set
+            {
+                _password = value;
+                ValidatePasswordRules();
+                OnPropertyChanged();
+                UpdateCanExecute();
+            }
         }
-    }
 
-    public string ConfirmPassword
-    {
-        get => _confirmPassword;
-        set
+        public string ConfirmPassword
         {
-            _confirmPassword = value;
-            OnPropertyChanged();
-            CommandManager.InvalidateRequerySuggested();
+            get => _confirmPassword;
+            set
+            {
+                _confirmPassword = value;
+                OnPropertyChanged();
+                UpdateCanExecute();
+            }
         }
-    }
 
-    public bool IsMinLengthMet { get; private set; }
-    public bool IsNumberMet { get; private set; }
-    public bool IsSpecialCharacterMet { get; private set; }
+        public bool IsMinLengthMet { get; private set; }
+        public bool IsNumberMet { get; private set; }
+        public bool IsSpecialCharacterMet { get; private set; }
 
-    public ICommand SignUpCommand { get; }
+        public ICommand SignUpCommand { get; }
 
-    public SignUpViewModel(IUserStore userStore)
-    {
-        _userStore = userStore ?? throw new ArgumentNullException(nameof(userStore));
-        SignUpCommand = new RelayCommand<object>(ExecuteSignUp, CanExecuteSignUp);
-    }
-
-    private bool CanExecuteSignUp(object parameter)
-    {
-        return IsMinLengthMet && IsNumberMet && IsSpecialCharacterMet && Password == ConfirmPassword;
-    }
-
-    private void ExecuteSignUp(object parameter)
-    {
-        if (_userStore.RegisterUser(Username, Password))
+        public SignUpViewModel(IUserStore userStore)
         {
-            MessageBox.Show("Registrierung erfolgreich. Sie können sich nun anmelden.", "Erfolg", MessageBoxButton.OK, MessageBoxImage.Information);
+            _userStore = userStore ?? throw new ArgumentNullException(nameof(userStore));
+            SignUpCommand = new RelayCommand<object>(ExecuteSignUp, CanExecuteSignUp);
         }
-        else
+
+        private bool CanExecuteSignUp(object parameter)
         {
-            MessageBox.Show("Registrierung fehlgeschlagen. Benutzername möglicherweise bereits vergeben.", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+            // Überprüfen, ob die Passwortregeln erfüllt sind und beide Passwörter gleich sind
+            return IsMinLengthMet && IsNumberMet && IsSpecialCharacterMet && Password == ConfirmPassword;
         }
-    }
 
-    private void ValidatePasswordRules()
-    {
-        IsMinLengthMet = !string.IsNullOrEmpty(Password) && Password.Length >= 8;
-        IsNumberMet = !string.IsNullOrEmpty(Password) && Password.Any(char.IsDigit);
-        IsSpecialCharacterMet = !string.IsNullOrEmpty(Password) && Password.Any(ch => !char.IsLetterOrDigit(ch));
-        OnPropertyChanged(nameof(IsMinLengthMet));
-        OnPropertyChanged(nameof(IsNumberMet));
-        OnPropertyChanged(nameof(IsSpecialCharacterMet));
-    }
+        private void ExecuteSignUp(object parameter)
+        {
+            if (_userStore.RegisterUser(Username, Password))
+            {
+                MessageBox.Show("Registrierung erfolgreich. Sie können sich nun anmelden.", "Erfolg", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                MessageBox.Show("Registrierung fehlgeschlagen. Benutzername möglicherweise bereits vergeben.", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
 
-    public event PropertyChangedEventHandler PropertyChanged;
+        private void ValidatePasswordRules()
+        {
+            IsMinLengthMet = !string.IsNullOrEmpty(Password) && Password.Length >= 8;
+            IsNumberMet = !string.IsNullOrEmpty(Password) && Password.Any(char.IsDigit);
+            IsSpecialCharacterMet = !string.IsNullOrEmpty(Password) && Password.Any(ch => !char.IsLetterOrDigit(ch));
+            OnPropertyChanged(nameof(IsMinLengthMet));
+            OnPropertyChanged(nameof(IsNumberMet));
+            OnPropertyChanged(nameof(IsSpecialCharacterMet));
+        }
 
-    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        private void UpdateCanExecute()
+        {
+            // Benachrichtige die UI, dass sich der Zustand von CanExecute geändert hat
+            (SignUpCommand as RelayCommand<object>)?.RaiseCanExecuteChanged();
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }
