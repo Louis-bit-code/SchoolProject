@@ -3,9 +3,10 @@
 /// <summary>
 ///     Interaction logic for MainWindow.xaml
 /// </summary>
-public class MainWindow
+public partial class MainWindow
 {
     public MainWindow()
     {
+        InitializeComponent();
     }
 }

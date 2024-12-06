@@ -21,6 +21,7 @@ namespace HotelManagement.Obstkorb.View
     {
         public ZimmerBuchungView()
         {
+            InitializeComponent();
         }
     }
 }

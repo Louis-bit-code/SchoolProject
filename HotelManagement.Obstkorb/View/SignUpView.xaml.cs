@@ -22,6 +22,7 @@ namespace HotelManagement.Obstkorb.View
     {
         public SignUpView()
         {
+            InitializeComponent();
         }
     }
 }

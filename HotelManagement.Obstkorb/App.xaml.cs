@@ -42,11 +42,21 @@ public partial class App : Application
         services.AddTransient<MainWindow>();
     }
 
-    protected override void OnStartup(StartupEventArgs e)
+    private void Application_Startup(object sender, StartupEventArgs e)
     {
-        base.OnStartup(e);
-
-        var loginWindow = _serviceProvider.GetService<LoginWindow>();
-        loginWindow?.Show();
+        // LoginWindow wird zuerst angezeigt
+        var loginWindow = new LoginWindow();
+        if (loginWindow.ShowDialog() == true)
+        {
+            // Wenn Login erfolgreich ist, zeige MainWindow
+            var mainWindow = new MainWindow();
+            mainWindow.Show();
+        }
+        else
+        {
+            // Falls Login abgebrochen oder fehlgeschlagen, beende die App
+            Current.Shutdown();
+        }
     }
 }
+

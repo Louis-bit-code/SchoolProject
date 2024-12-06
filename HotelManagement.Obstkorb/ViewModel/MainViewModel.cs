@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using HotelManagement.Obstkorb.View;
+using System.ComponentModel;
 using System.Windows.Input;
 
 namespace HotelManagement.Obstkorb.ViewModel;
@@ -22,9 +23,23 @@ public class MainViewModel : BaseViewModel
     public MainViewModel()
     {
         // Initiale Ansicht
-        ShowFreizeitaktivitätenViewCommand = new RelayCommand<object>(o => CurrentView = new FreizeitaktivitätenViewModel());
-        ShowAutobuchungViewCommand = new RelayCommand<object>(o => CurrentView = new AutobuchungViewModel());
+        ShowFreizeitaktivitätenViewCommand = new RelayCommand<object>(o => ShowFreizeitAktivitätenView());
+        ShowAutobuchungViewCommand = new RelayCommand<object>(o => ShowAutoBuchungView());
 
-        CurrentView = new FreizeitaktivitätenViewModel(); // Standardmäßig Freizeitaktivitäten anzeigen
+        ShowFreizeitAktivitätenView(); // Standardmäßig Freizeitaktivitäten anzeigen
+    }
+
+    private void ShowFreizeitAktivitätenView()
+    {
+        var view = new FreizeitAktivitätenView();
+        view.DataContext = new FreizeitaktivitätenViewModel();
+        CurrentView = view;
+    }
+
+    private void ShowAutoBuchungView()
+    {
+        var view = new AutoBuchungView();
+        view.DataContext = new AutobuchungViewModel();
+        CurrentView = view;
     }
 }
