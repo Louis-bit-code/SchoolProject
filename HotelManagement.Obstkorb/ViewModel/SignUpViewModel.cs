@@ -6,7 +6,7 @@ using System.Windows;
 
 namespace HotelManagement.Obstkorb.ViewModel;
 
-public class SignUpViewModel : INotifyPropertyChanged
+public class SignUpViewModel : BaseViewModel
 {
     private readonly IUserStore _userStore;
 
@@ -48,7 +48,7 @@ public class SignUpViewModel : INotifyPropertyChanged
     {
         IsMinLengthMet = Password.Length >= 8;
         IsNumberMet = Regex.IsMatch(Password, @"\d");
-        IsSpecialCharacterMet = Regex.IsMatch(Password, @"[!@#$%^&*(),.?\":{ }|<>]");
+        IsSpecialCharacterMet = Regex.IsMatch(Password, @"[!@#$%^&*(),.?\:{ }|<>]");
         OnPropertyChanged(nameof(IsMinLengthMet));
         OnPropertyChanged(nameof(IsNumberMet));
         OnPropertyChanged(nameof(IsSpecialCharacterMet));

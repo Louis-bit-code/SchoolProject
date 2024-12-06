@@ -3,7 +3,7 @@
 using System.ComponentModel;
 using System.Windows.Input;
 
-public class LoginViewModel : INotifyPropertyChanged
+public class LoginViewModel : BaseViewModel
 {
     private object _currentView;
 
@@ -23,8 +23,8 @@ public class LoginViewModel : INotifyPropertyChanged
     public LoginViewModel()
     {
         // Standardmäßig die SignIn Ansicht anzeigen
-        ShowSignInViewCommand = new RelayCommand(o => CurrentView = new SignInViewModel());
-        ShowSignUpViewCommand = new RelayCommand(o => CurrentView = new SignUpViewModel());
+        ShowSignInViewCommand = new RelayCommand<>(o => CurrentView = new SignInViewModel());
+        ShowSignUpViewCommand = new RelayCommand<>(o => CurrentView = new SignUpViewModel());
 
         CurrentView = new SignInViewModel();
     }

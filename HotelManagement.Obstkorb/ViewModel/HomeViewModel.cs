@@ -6,7 +6,7 @@ using Hotelmanagement.Obstkorb.Model.Hotel;
 
 namespace HotelManagement.Obstkorb.ViewModel;
 
-public class HomeViewModel : INotifyPropertyChanged
+public class HomeViewModel : BaseViewModel
 {
     private readonly IHotelBuchungStore _bookingStore;
     private readonly User _user;

@@ -1,0 +1,25 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                        xmlns:s="clr-namespace:System;assembly=mscorlib"
+                        xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml"
+                        xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+
+    <!-- IntelliSense Settings -->
+    <s:Boolean x:Key="/Default/CodeEditing/Intellisense/CodeCompletion/IntelliSenseCompletingCharacters/CSharpCompletingCharacters/UpgradedFromVSSettings/@EntryValue">True</s:Boolean>
+    <s:String x:Key="/Default/CodeStyle/CodeCleanup/RecentlyUsedProfile/@EntryValue">Built-in: Reformat &amp; Apply Syntax Style</s:String>
+    <s:Boolean x:Key="/Default/CodeStyle/Naming/CSharpAutoNaming/IsNotificationDisabled/@EntryValue">True</s:Boolean>
+
+    <!-- Enforce CLR Types (e.g., Int32, String) -->
+    <s:Boolean x:Key="/Default/CodeInspection/CSharp/CSharpBuiltInTypeStyle/ForMethodReturnType/PreferBuiltInType/@EntryValue">False</s:Boolean>
+    <s:Boolean x:Key="/Default/CodeInspection/CSharp/CSharpBuiltInTypeStyle/ForMethodReturnType/PreferFrameworkType/@EntryValue">True</s:Boolean>
+    <s:Boolean x:Key="/Default/CodeInspection/CSharp/CSharpBuiltInTypeStyle/ForLocalVariable/PreferBuiltInType/@EntryValue">False</s:Boolean>
+    <s:Boolean x:Key="/Default/CodeInspection/CSharp/CSharpBuiltInTypeStyle/ForLocalVariable/PreferFrameworkType/@EntryValue">True</s:Boolean>
+    <s:Boolean x:Key="/Default/CodeInspection/CSharp/CSharpBuiltInTypeStyle/ForField/PreferBuiltInType/@EntryValue">False</s:Boolean>
+    <s:Boolean x:Key="/Default/CodeInspection/CSharp/CSharpBuiltInTypeStyle/ForField/PreferFrameworkType/@EntryValue">True</s:Boolean>
+    <s:Boolean x:Key="/Default/CodeInspection/CSharp/CSharpBuiltInTypeStyle/ForParameter/PreferBuiltInType/@EntryValue">False</s:Boolean>
+    <s:Boolean x:Key="/Default/CodeInspection/CSharp/CSharpBuiltInTypeStyle/ForParameter/PreferFrameworkType/@EntryValue">True</s:Boolean>
+
+    <!-- Show Warnings for Missing XML Comments -->
+    <s:String x:Key="/Default/InspectionSeverities/XmlDocWarning/@EntryValue">WARNING</s:String>
+    <s:String x:Key="/Default/InspectionSeverities/XmlDocMissing/@EntryValue">WARNING</s:String>
+
+</wpf:ResourceDictionary>

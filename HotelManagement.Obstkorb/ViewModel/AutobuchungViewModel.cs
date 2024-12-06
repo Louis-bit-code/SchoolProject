@@ -1,6 +1,6 @@
 ﻿namespace HotelManagement.Obstkorb.ViewModel;
 
-public class AutobuchungViewModel
+public class AutobuchungViewModel : BaseViewModel
 {
         public string Title => "Autobuchung Übersicht";
 }

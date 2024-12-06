@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace HotelManagement.Obstkorb.ViewModel;
 
-public class MainViewModel : INotifyPropertyChanged
+public class MainViewModel : BaseViewModel
 {
     private object _currentView;
 

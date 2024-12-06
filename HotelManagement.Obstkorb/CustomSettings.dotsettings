@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<settings version="1.0">
+	<entry key="CodeInspectionSettings.XmlDocWarning" value="WARNING" />
+	<entry key="CodeInspectionSettings.XmlDocMissing" value="WARNING" />
+	<entry key="CodeInspectionSettings.CSharpBuiltInTypeStyle.ForMethodReturnType.PreferBuiltInType" value="False" />
+	<entry key="CodeInspectionSettings.CSharpBuiltInTypeStyle.ForMethodReturnType.PreferFrameworkType" value="True" />
+	<entry key="CodeInspectionSettings.CSharpBuiltInTypeStyle.ForLocalVariable.PreferBuiltInType" value="False" />
+	<entry key="CodeInspectionSettings.CSharpBuiltInTypeStyle.ForLocalVariable.PreferFrameworkType" value="True" />
+	<entry key="CodeInspectionSettings.CSharpBuiltInTypeStyle.ForField.PreferBuiltInType" value="False" />
+	<entry key="CodeInspectionSettings.CSharpBuiltInTypeStyle.ForField.PreferFrameworkType" value="True" />
+	<entry key="CodeInspectionSettings.CSharpBuiltInTypeStyle.ForParameter.PreferBuiltInType" value="False" />
+	<entry key="CodeInspectionSettings.CSharpBuiltInTypeStyle.ForParameter.PreferFrameworkType" value="True" />
+</settings>

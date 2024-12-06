@@ -5,7 +5,7 @@ using System.Windows;
 
 namespace HotelManagement.Obstkorb.ViewModel;
 
-public class SignInViewModel
+public class SignInViewModel : BaseViewModel
 {
     private readonly IUserStore _userStore;
 

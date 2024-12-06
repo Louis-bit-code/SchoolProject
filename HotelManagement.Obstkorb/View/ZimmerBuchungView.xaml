@@ -1,0 +1,14 @@
+﻿<Window x:Class="HotelManagement.Obstkorb.View.HotelbuchungView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Hotel Buchung" Height="450" Width="800">
+    <Grid>
+        <ComboBox ItemsSource="{Binding HotelzimmerListe}" 
+                  DisplayMemberPath="Zimmernummer" 
+                  SelectedValuePath="Id"
+                  SelectedValue="{Binding SelectedZimmerId}" 
+                  HorizontalAlignment="Left" VerticalAlignment="Top" Width="200"/>
+
+        <Button Command="{Binding BookRoomCommand}" Content="Zimmer buchen" Width="100" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="220,0,0,0"/>
+    </Grid>
+</Window>
