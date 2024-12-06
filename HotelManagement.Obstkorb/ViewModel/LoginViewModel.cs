@@ -23,8 +23,8 @@ public class LoginViewModel : BaseViewModel
     public LoginViewModel()
     {
         // Standardmäßig die SignIn Ansicht anzeigen
-        ShowSignInViewCommand = new RelayCommand<>(o => CurrentView = new SignInViewModel());
-        ShowSignUpViewCommand = new RelayCommand<>(o => CurrentView = new SignUpViewModel());
+        ShowSignInViewCommand = new RelayCommand(o => CurrentView = new SignInViewModel());
+        ShowSignUpViewCommand = new RelayCommand(o => CurrentView = new SignUpViewModel());
 
         CurrentView = new SignInViewModel();
     }

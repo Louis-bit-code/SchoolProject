@@ -20,7 +20,7 @@
             Buchungen = new ObservableCollection<Hotelbuchung>();
 
             // Befehl zum Buchen eines Zimmers
-            BookRoomCommand = new RelayCommand<Guid>(BookRoom);
+            BookRoomCommand = new RelayCommand<Int32>(BookRoom);
 
             // Zimmer und Buchungen laden
             LoadHotelzimmer();
@@ -30,7 +30,7 @@
         // Methode zum Laden aller Hotelzimmer
         private void LoadHotelzimmer()
         {
-            var zimmer = _hotelbuchungStore.GetAllRooms();  // Erhalte alle Zimmerdaten
+            var zimmer = HotelZimmerStore.GetAllRooms();  // Erhalte alle Zimmerdaten
             HotelzimmerListe.Clear();
             foreach (var item in zimmer)
             {
@@ -41,7 +41,7 @@
         // Methode zum Laden aller Buchungen des Nutzers
         private void LoadBookings()
         {
-            var bookings = _hotelbuchungStore.GetBookingsByUser();
+            var bookings = _hotelbuchungStore.GetUserBookings();
             Buchungen.Clear();
             foreach (var booking in bookings)
             {
@@ -50,7 +50,7 @@
         }
 
         // Methode zum Buchen eines Zimmers
-        private void BookRoom(Guid zimmerId)
+        private void BookRoom(Int32 zimmerId)
         {
             var von = DateTime.Now;  // Beispielwert
             var bis = DateTime.Now.AddDays(2);  // Beispielwert

@@ -1,8 +1,8 @@
 ﻿namespace Hotelmanagement.Obstkorb.Model.Hotel;
 
-public class Hotelbuchung : User
+public class Hotelbuchung : BaseEntity
 {
-    public Hotelbuchung(string userName, Preis preis, DateTime von, DateTime bis, bool gebucht, string userBuchung) : base(userName)
+    public Hotelbuchung(string userName, Preis preis, DateTime von, DateTime bis, bool gebucht, string userBuchung)
     {
         Preis = preis;
         Von = von;
