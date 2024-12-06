@@ -25,12 +25,10 @@ public class HomeViewModel : BaseViewModel
     public void LoadRoomStatuses()
     {
         var bookings = _bookingStore.GetAllBookings();
-        var roomStatusList = bookings.Select(booking => new Hotelbuchung
-        {
-            Id = booking.Id,
-            UserBuchung = Convert.ToBoolean(booking.UserBuchung) ? "Von Ihnen gebucht" : "Gebucht",
-            Gebucht = booking.Gebucht
-        }).ToList();
+        var roomStatusList = bookings.Select(booking => new Hotelbuchung(_user.Username,booking.Preis,booking.Von,booking.Bis,booking.Gebucht, Convert.ToBoolean(booking.Gebucht)
+            ? "Frei"
+            : "Gebucht")
+        ).ToList();
 
         RoomStatusList = new ObservableCollection<Hotelbuchung>(roomStatusList);
         OnPropertyChanged(nameof(RoomStatusList));
