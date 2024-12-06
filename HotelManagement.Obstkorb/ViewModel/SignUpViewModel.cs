@@ -14,7 +14,6 @@ public class SignUpViewModel : BaseViewModel
     public string Password { get; set; }
     public string ConfirmPassword { get; set; }
 
-    // Regeln zur Validierung
     public bool IsMinLengthMet { get; set; }
     public bool IsNumberMet { get; set; }
     public bool IsSpecialCharacterMet { get; set; }
@@ -23,8 +22,8 @@ public class SignUpViewModel : BaseViewModel
 
     public SignUpViewModel(IUserStore userStore)
     {
-        _userStore = userStore;
-        SignUpCommand = new RelayCommand(ExecuteSignUp, CanExecuteSignUp);
+        _userStore = userStore ?? throw new ArgumentNullException(nameof(userStore));
+        SignUpCommand = new RelayCommand<object>(ExecuteSignUp, CanExecuteSignUp);
     }
 
     private bool CanExecuteSignUp(object parameter)
@@ -42,21 +41,5 @@ public class SignUpViewModel : BaseViewModel
         {
             MessageBox.Show("Registrierung fehlgeschlagen. Benutzername möglicherweise bereits vergeben.", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
         }
-    }
-
-    private void ValidatePasswordRules()
-    {
-        IsMinLengthMet = Password.Length >= 8;
-        IsNumberMet = Regex.IsMatch(Password, @"\d");
-        IsSpecialCharacterMet = Regex.IsMatch(Password, @"[!@#$%^&*(),.?\:{ }|<>]");
-        OnPropertyChanged(nameof(IsMinLengthMet));
-        OnPropertyChanged(nameof(IsNumberMet));
-        OnPropertyChanged(nameof(IsSpecialCharacterMet));
-    }
-
-    public event PropertyChangedEventHandler PropertyChanged;
-    protected virtual void OnPropertyChanged(string propertyName)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

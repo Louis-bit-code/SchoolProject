@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace Hotelmanagement.Obstkorb.DatabaseInterface;

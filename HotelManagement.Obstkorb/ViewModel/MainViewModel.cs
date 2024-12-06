@@ -12,8 +12,7 @@ public class MainViewModel : BaseViewModel
         get { return _currentView; }
         set
         {
-            _currentView = value;
-            OnPropertyChanged(nameof(CurrentView));
+            SetProperty(ref _currentView, value);
         }
     }
 
@@ -23,16 +22,9 @@ public class MainViewModel : BaseViewModel
     public MainViewModel()
     {
         // Initiale Ansicht
-        ShowFreizeitaktivitätenViewCommand = new RelayCommand(o => CurrentView = new FreizeitaktivitätenViewModel());
-        ShowAutobuchungViewCommand = new RelayCommand(o => CurrentView = new AutobuchungViewModel());
+        ShowFreizeitaktivitätenViewCommand = new RelayCommand<object>(o => CurrentView = new FreizeitaktivitätenViewModel());
+        ShowAutobuchungViewCommand = new RelayCommand<object>(o => CurrentView = new AutobuchungViewModel());
 
         CurrentView = new FreizeitaktivitätenViewModel(); // Standardmäßig Freizeitaktivitäten anzeigen
-    }
-
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    protected virtual void OnPropertyChanged(string propertyName)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

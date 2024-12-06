@@ -16,15 +16,14 @@ public class SignInViewModel : BaseViewModel
 
     public SignInViewModel(IUserStore userStore)
     {
-        _userStore = userStore;
-        SignInCommand = new RelayCommand(ExecuteSignIn);
+        _userStore = userStore ?? throw new ArgumentNullException(nameof(userStore));
+        SignInCommand = new RelayCommand<object>(ExecuteSignIn);
     }
 
     private void ExecuteSignIn(object parameter)
     {
         if (_userStore.AuthenticateUser(Username, Password))
         {
-            // Erfolg -> Wechsle zur MainWindow
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
 
@@ -33,7 +32,6 @@ public class SignInViewModel : BaseViewModel
         }
         else
         {
-            // Fehler -> Benutzer benachrichtigen
             MessageBox.Show("Benutzername oder Passwort ist falsch.", "Anmeldung fehlgeschlagen", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }

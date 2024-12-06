@@ -7,7 +7,9 @@
 
     public class HotelbuchungViewModel : BaseViewModel
     {
-        private readonly IHotelBuchungStore _hotelbuchungStore;
+        private IHotelZimmerStore HotelZimmerStore { get; }
+
+        private IHotelBuchungStore HotelBuchungStore { get; }
         public ObservableCollection<Hotelzimmer> HotelzimmerListe { get; private set; }
         public ObservableCollection<Hotelbuchung> Buchungen { get; private set; }
 
@@ -15,12 +17,12 @@
 
         public HotelbuchungViewModel(IHotelBuchungStore hotelbuchungStore)
         {
-            _hotelbuchungStore = hotelbuchungStore;
+            HotelBuchungStore = hotelbuchungStore;
             HotelzimmerListe = new ObservableCollection<Hotelzimmer>();
             Buchungen = new ObservableCollection<Hotelbuchung>();
 
             // Befehl zum Buchen eines Zimmers
-            BookRoomCommand = new RelayCommand<Int32>(BookRoom);
+            BookRoomCommand = new RelayCommand<int>(BookRoom);
 
             // Zimmer und Buchungen laden
             LoadHotelzimmer();
@@ -28,9 +30,9 @@
         }
 
         // Methode zum Laden aller Hotelzimmer
-        private void LoadHotelzimmer()
+        private async Task LoadHotelzimmer()
         {
-            var zimmer = HotelZimmerStore.GetAllRooms();  // Erhalte alle Zimmerdaten
+            var zimmer =  await HotelZimmerStore.GetAllRoomsAsync(); // Erhalte alle Zimmerdaten
             HotelzimmerListe.Clear();
             foreach (var item in zimmer)
             {
@@ -41,7 +43,7 @@
         // Methode zum Laden aller Buchungen des Nutzers
         private void LoadBookings()
         {
-            var bookings = _hotelbuchungStore.GetUserBookings();
+            var bookings = HotelBuchungStore.GetUserBookings();
             Buchungen.Clear();
             foreach (var booking in bookings)
             {
@@ -50,12 +52,12 @@
         }
 
         // Methode zum Buchen eines Zimmers
-        private void BookRoom(Int32 zimmerId)
+        private void BookRoom(int zimmerId)
         {
-            var von = DateTime.Now;  // Beispielwert
-            var bis = DateTime.Now.AddDays(2);  // Beispielwert
+            DateTime von = DateTime.Now; // Beispielwert
+            DateTime bis = DateTime.Now.AddDays(2); // Beispielwert
 
-            _hotelbuchungStore.BookRoom(zimmerId, von, bis);
+            HotelBuchungStore.BookRoom(zimmerId, von, bis);
 
             // Buchungen neu laden, damit die UI aktuell ist
             LoadBookings();
