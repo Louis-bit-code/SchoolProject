@@ -1,34 +1,46 @@
-﻿namespace HotelManagement.Obstkorb.ViewModel;
-
-using Hotelmanagement.Obstkorb.DatabaseInterface;
-using System.ComponentModel;
+﻿using Hotelmanagement.Obstkorb.DatabaseInterface;
 using System.Windows.Input;
 
-public class LoginViewModel : BaseViewModel
+namespace HotelManagement.Obstkorb.ViewModel
 {
-    private object _currentView;
-    private readonly IUserStore _userStore;
-
-    public object CurrentView
+    public class LoginViewModel : BaseViewModel
     {
-        get { return _currentView; }
-        set
+        private object _currentView;
+        private readonly IUserStore _userStore;
+
+        public object CurrentView
         {
-            SetProperty(ref _currentView, value);
+            get { return _currentView; }
+            set
+            {
+                SetProperty(ref _currentView, value);
+            }
         }
-    }
 
-    public ICommand ShowSignInViewCommand { get; }
-    public ICommand ShowSignUpViewCommand { get; }
+        public ICommand ShowSignInViewCommand { get; }
+        public ICommand ShowSignUpViewCommand { get; }
 
-    public LoginViewModel(IUserStore userStore)
-    {
-        _userStore = userStore;
+        // Parameterloser Konstruktor, der DefaultUserStore verwendet
+        public LoginViewModel(IUserStore userStore)
+        {
+            _userStore = userStore;
 
-        // Standardmäßig die SignIn Ansicht anzeigen
-        ShowSignInViewCommand = new RelayCommand<object>(o => CurrentView = new SignInViewModel(_userStore));
-        ShowSignUpViewCommand = new RelayCommand<object>(o => CurrentView = new SignUpViewModel(_userStore));
+            // Initialisierung der Commands
+            ShowSignInViewCommand = new RelayCommand<object>(o => ShowSignInView());
+            ShowSignUpViewCommand = new RelayCommand<object>(o => ShowSignUpView());
 
-        CurrentView = new SignInViewModel(_userStore);
+            // Standardmäßig die Sign-In-Ansicht anzeigen
+            ShowSignInView();
+        }
+
+        private void ShowSignInView()
+        {
+            CurrentView = new SignInViewModel(_userStore);
+        }
+
+        private void ShowSignUpView()
+        {
+            CurrentView = new SignUpViewModel(_userStore);
+        }
     }
 }

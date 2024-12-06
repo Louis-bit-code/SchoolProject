@@ -1,12 +1,21 @@
 ﻿<Window x:Class="HotelManagement.Obstkorb.View.LoginWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:local="clr-namespace:HotelManagement"
+        xmlns:local="clr-namespace:HotelManagement.Obstkorb.View"
         xmlns:viewModel="clr-namespace:HotelManagement.Obstkorb.ViewModel"
         Title="Login" Height="300" Width="400">
-    <Window.DataContext>
-        <viewModel:LoginViewModel />
-    </Window.DataContext>
+
+    <Window.Resources>
+        <!-- DataTemplate für SignInViewModel -->
+        <DataTemplate DataType="{x:Type viewModel:SignInViewModel}">
+            <local:SignInView />
+        </DataTemplate>
+
+        <!-- DataTemplate für SignUpViewModel -->
+        <DataTemplate DataType="{x:Type viewModel:SignUpViewModel}">
+            <local:SignUpView />
+        </DataTemplate>
+    </Window.Resources>
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -15,9 +24,11 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <!-- Sign In und Sign Up Buttons -->
         <Button Content="Sign In" Command="{Binding ShowSignInViewCommand}" Grid.Row="0" Width="150" Margin="5"/>
         <Button Content="Sign Up" Command="{Binding ShowSignUpViewCommand}" Grid.Row="1" Width="150" Margin="5"/>
 
+        <!-- ContentControl, um die aktuelle Ansicht anzuzeigen -->
         <ContentControl Content="{Binding CurrentView}" Grid.Row="2" Margin="5"/>
     </Grid>
 </Window>
