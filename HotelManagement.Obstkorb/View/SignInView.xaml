@@ -20,7 +20,7 @@
                             <Setter Property="Foreground" Value="Black" />
                             <Setter Property="Text" Value="" />
                         </Trigger>
-                        <Trigger Property="Text" Value="">
+                        <Trigger Property="Tag" Value="">
                             <Setter Property="Foreground" Value="Gray" />
                             <Setter Property="Text" Value="Benutzername eingeben..." />
                         </Trigger>

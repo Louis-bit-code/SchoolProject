@@ -1,10 +1,10 @@
-﻿namespace HotelManagement.Obstkorb;
-
-using System;
+﻿using System;
 using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
 
+namespace HotelManagement.Obstkorb
+{
 public class BoolToColorConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -20,4 +20,5 @@ public class BoolToColorConverter : IValueConverter
     {
         throw new NotImplementedException();
     }
+}
 }

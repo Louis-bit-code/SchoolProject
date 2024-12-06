@@ -3,20 +3,54 @@ using System.ComponentModel;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
 using System.Windows;
+using System.Runtime.CompilerServices;
 
 namespace HotelManagement.Obstkorb.ViewModel;
 
-public class SignUpViewModel : BaseViewModel
+public class SignUpViewModel : INotifyPropertyChanged
 {
     private readonly IUserStore _userStore;
 
-    public string Username { get; set; }
-    public string Password { get; set; }
-    public string ConfirmPassword { get; set; }
+    private string _username;
+    private string _password;
+    private string _confirmPassword;
 
-    public bool IsMinLengthMet { get; set; }
-    public bool IsNumberMet { get; set; }
-    public bool IsSpecialCharacterMet { get; set; }
+    public string Username
+    {
+        get => _username;
+        set
+        {
+            _username = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public string Password
+    {
+        get => _password;
+        set
+        {
+            _password = value;
+            ValidatePasswordRules();
+            OnPropertyChanged();
+            CommandManager.InvalidateRequerySuggested();
+        }
+    }
+
+    public string ConfirmPassword
+    {
+        get => _confirmPassword;
+        set
+        {
+            _confirmPassword = value;
+            OnPropertyChanged();
+            CommandManager.InvalidateRequerySuggested();
+        }
+    }
+
+    public bool IsMinLengthMet { get; private set; }
+    public bool IsNumberMet { get; private set; }
+    public bool IsSpecialCharacterMet { get; private set; }
 
     public ICommand SignUpCommand { get; }
 
@@ -41,5 +75,22 @@ public class SignUpViewModel : BaseViewModel
         {
             MessageBox.Show("Registrierung fehlgeschlagen. Benutzername möglicherweise bereits vergeben.", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
         }
+    }
+
+    private void ValidatePasswordRules()
+    {
+        IsMinLengthMet = !string.IsNullOrEmpty(Password) && Password.Length >= 8;
+        IsNumberMet = !string.IsNullOrEmpty(Password) && Password.Any(char.IsDigit);
+        IsSpecialCharacterMet = !string.IsNullOrEmpty(Password) && Password.Any(ch => !char.IsLetterOrDigit(ch));
+        OnPropertyChanged(nameof(IsMinLengthMet));
+        OnPropertyChanged(nameof(IsNumberMet));
+        OnPropertyChanged(nameof(IsSpecialCharacterMet));
+    }
+
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

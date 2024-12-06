@@ -1,7 +1,12 @@
 ﻿<UserControl x:Class="HotelManagement.Obstkorb.View.SignUpView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:HotelManagement.Obstkorb.View"
+             xmlns:obstkorb="clr-namespace:HotelManagement.Obstkorb"
              Height="300" Width="400">
+    <UserControl.Resources>
+        <obstkorb:BoolToColorConverter x:Key="BoolToColorConverter"/>
+    </UserControl.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -18,11 +23,11 @@
 
         <!-- Passwort Eingabe -->
         <TextBlock Text="Passwort:" Grid.Row="2" Margin="0,0,0,5"/>
-        <PasswordBox x:Name="PasswordBox" Password="{Binding Password, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Margin="0,0,0,10"/>
+        <PasswordBox local:PasswordBoxHelper.BoundPassword="{Binding Password, Mode=TwoWay}" Grid.Row="3" Margin="0,0,0,10"/>
 
         <!-- Passwort wiederholen -->
         <TextBlock Text="Passwort wiederholen:" Grid.Row="4" Margin="0,0,0,5"/>
-        <PasswordBox Password="{Binding ConfirmPassword, UpdateSourceTrigger=PropertyChanged}" Grid.Row="5" Margin="0,0,0,10"/>
+        <PasswordBox local:PasswordBoxHelper.BoundPassword="{Binding ConfirmPassword, Mode=TwoWay}" Grid.Row="5" Margin="0,0,0,10"/>
 
         <!-- Passwort Regeln -->
         <StackPanel Grid.Row="6" Margin="0,10,0,0">
