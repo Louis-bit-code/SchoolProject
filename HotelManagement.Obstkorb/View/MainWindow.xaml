@@ -1,11 +1,24 @@
-﻿<Window x:Class="HotelManagement.Obstkorb.MainWindow"
+﻿<Window x:Class="HotelManagement.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        xmlns:local="clr-namespace:HotelManagement"
+        xmlns:views="clr-namespace:HotelManagement.Views"
+        xmlns:viewModel="clr-namespace:HotelManagement.Obstkorb.ViewModel"
+        Title="Hotel Management" Height="450" Width="800">
 
-    </Grid>
+    <Window.DataContext>
+        <viewModel:MainViewModel />
+    </Window.DataContext>
+
+    <DockPanel>
+        <!-- Ribbon Menü -->
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Home" Command="{Binding ShowFreizeitaktivitätenViewCommand}"/>
+            <MenuItem Header="Freizeitaktivitäten" Command="{Binding ShowFreizeitaktivitätenViewCommand}"/>
+            <MenuItem Header="Autobuchung" Command="{Binding ShowAutobuchungViewCommand}"/>
+        </Menu>
+
+        <!-- Content Control für dynamischen Inhalt -->
+        <ContentControl Content="{Binding CurrentView}" Margin="10"/>
+    </DockPanel>
 </Window>

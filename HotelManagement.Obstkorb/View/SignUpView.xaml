@@ -1,0 +1,37 @@
+﻿<UserControl x:Class="HotelManagement.Views.SignUpView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Height="300" Width="400">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Kundenname Eingabe -->
+        <TextBlock Text="Kundenname:" Grid.Row="0" Margin="0,0,0,5"/>
+        <TextBox Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Margin="0,0,0,10"/>
+
+        <!-- Passwort Eingabe -->
+        <TextBlock Text="Passwort:" Grid.Row="2" Margin="0,0,0,5"/>
+        <PasswordBox x:Name="PasswordBox" Password="{Binding Password, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Margin="0,0,0,10"/>
+
+        <!-- Passwort wiederholen -->
+        <TextBlock Text="Passwort wiederholen:" Grid.Row="4" Margin="0,0,0,5"/>
+        <PasswordBox Password="{Binding ConfirmPassword, UpdateSourceTrigger=PropertyChanged}" Grid.Row="5" Margin="0,0,0,10"/>
+
+        <!-- Passwort Regeln -->
+        <StackPanel Grid.Row="6" Margin="0,10,0,0">
+            <TextBlock Text="Passwort muss mindestens:" FontWeight="Bold"/>
+            <TextBlock Text="8 Zeichen lang sein" Foreground="{Binding IsMinLengthMet, Converter={StaticResource BoolToColorConverter}}"/>
+            <TextBlock Text="Eine Zahl enthalten" Foreground="{Binding IsNumberMet, Converter={StaticResource BoolToColorConverter}}"/>
+            <TextBlock Text="Ein Sonderzeichen enthalten" Foreground="{Binding IsSpecialCharacterMet, Converter={StaticResource BoolToColorConverter}}"/>
+        </StackPanel>
+
+        <Button Content="Registrieren" Command="{Binding SignUpCommand}" Grid.Row="7" Width="150" HorizontalAlignment="Right"/>
+    </Grid>
+</UserControl>

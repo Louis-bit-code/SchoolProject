@@ -2,7 +2,6 @@
 
 public class Hotelbuchung : BaseEntity
 {
-    public int Buchungsnummer { get; set; }
 
     public Preis Preis { get; set; }
 

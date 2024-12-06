@@ -9,11 +9,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ViewModel\" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Page Include="App.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Hotelmanagement.Obstkorb.DatabaseInterface\Hotelmanagement.Obstkorb.DatabaseInterface.csproj" />
+    <ProjectReference Include="..\Hotelmanagement.Obstkorb.Model\Hotelmanagement.Obstkorb.Model.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelManagement.Obstkorb", "HotelManagement.Obstkorb\HotelManagement.Obstkorb.csproj", "{C5004394-0A9C-41F2-A5D6-2D057C3E4C65}"
+	ProjectSection(ProjectDependencies) = postProject
+		{06258AEE-855A-45BF-99D2-872183F76A56} = {06258AEE-855A-45BF-99D2-872183F76A56}
+		{827D985A-831B-4D50-8211-EF6CC9B2A6B8} = {827D985A-831B-4D50-8211-EF6CC9B2A6B8}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hotelmanagement.Obstkorb.Model", "Hotelmanagement.Obstkorb.Model\Hotelmanagement.Obstkorb.Model.csproj", "{06258AEE-855A-45BF-99D2-872183F76A56}"
 EndProject
