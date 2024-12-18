@@ -1,19 +1,66 @@
 ﻿<Window x:Class="HotelManagement.Obstkorb.View.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Hotel Management" Height="600" Width="800">
+        Title="Hotel Management" Height="600" Width="900"
+        Background="#F5F5F5" MinHeight="500" MinWidth="800">
     <DockPanel>
-        <!-- Ribbon Menü -->
-        <Ribbon DockPanel.Dock="Top">
-            <RibbonTab Header="Home">
-                <RibbonGroup Header="Navigation">
-                    <RibbonButton Label="Freizeitaktivitäten" Command="{Binding ShowFreizeitaktivitätenViewCommand}" />
-                    <RibbonButton Label="AutoBuchung" Command="{Binding ShowAutobuchungViewCommand}" />
-                </RibbonGroup>
-            </RibbonTab>
-        </Ribbon>
+        <!-- Dashboard Inhalt -->
+        <Border Background="White" CornerRadius="10" Margin="10" Padding="10" 
+                BorderBrush="#D1D1D1" BorderThickness="1">
+            <ScrollViewer>
+                <StackPanel>
+                    <!-- Header -->
+                    <TextBlock Text="Willkommen im Hotel Management System" 
+                               FontSize="22" FontWeight="Bold" Foreground="#333"
+                               HorizontalAlignment="Center" Margin="0,10"/>
 
-        <!-- Hauptinhalt -->
-        <ContentControl Content="{Binding CurrentView}" />
+                    <!-- Schnellzugriffe -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20">
+                        <Button Content="Neue Buchung" Width="150" Height="40" Margin="10" Command="{Binding ShowZimmerbuchungViewCommand}" 
+                                Background="#4CAF50" Foreground="White" FontWeight="Bold" />
+                        <Button Content="Freizeitangebote" Width="150" Height="40" Margin="10" Command="{Binding ShowFreizeitaktivitätenViewCommand}" 
+                                Background="#2196F3" Foreground="White" FontWeight="Bold" />
+                        <Button Content="Kundendaten" Width="150" Height="40" Margin="10" Command="{Binding ShowKundendatenViewCommand}" 
+                                Background="#FFC107" Foreground="White" FontWeight="Bold" />
+                    </StackPanel>
+
+                    <!-- Statistiken -->
+                    <TextBlock Text="Statistiken" FontSize="18" FontWeight="SemiBold" Foreground="#444" Margin="0,20,0,10" />
+                    <UniformGrid Columns="3" Margin="0,0,0,10">
+                        <Border Background="#E3F2FD" Padding="10" CornerRadius="5" Margin="5">
+                            <StackPanel>
+                                <TextBlock Text="Aktive Buchungen" FontSize="14" Foreground="#666" />
+                                <TextBlock Text="42" FontSize="20" FontWeight="Bold" Foreground="#1E88E5" />
+                            </StackPanel>
+                        </Border>
+                        <Border Background="#F3E5F5" Padding="10" CornerRadius="5" Margin="5">
+                            <StackPanel>
+                                <TextBlock Text="Kundenregistrierungen" FontSize="14" Foreground="#666" />
+                                <TextBlock Text="15" FontSize="20" FontWeight="Bold" Foreground="#8E24AA" />
+                            </StackPanel>
+                        </Border>
+                        <Border Background="#E8F5E9" Padding="10" CornerRadius="5" Margin="5">
+                            <StackPanel>
+                                <TextBlock Text="Freizeitbuchungen" FontSize="14" Foreground="#666" />
+                                <TextBlock Text="8" FontSize="20" FontWeight="Bold" Foreground="#43A047" />
+                            </StackPanel>
+                        </Border>
+                    </UniformGrid>
+
+                    <!-- Aktuelle Buchungen -->
+                    <TextBlock Text="Aktuelle Buchungen" FontSize="18" FontWeight="SemiBold" Foreground="#444" Margin="0,10" />
+                    <ListView ItemsSource="{Binding RecentBookings}" Margin="0,5">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Buchungsnummer" DisplayMemberBinding="{Binding Buchungsnummer}" Width="150" />
+                                <GridViewColumn Header="Kunde" DisplayMemberBinding="{Binding Kunde}" Width="200" />
+                                <GridViewColumn Header="Zimmer" DisplayMemberBinding="{Binding Zimmer}" Width="150" />
+                                <GridViewColumn Header="Zeitraum" DisplayMemberBinding="{Binding Zeitraum}" Width="200" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
     </DockPanel>
 </Window>
