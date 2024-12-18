@@ -3,42 +3,121 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:HotelManagement.Obstkorb.View"
              xmlns:obstkorb="clr-namespace:HotelManagement.Obstkorb"
-             Height="300" Width="400">
+             Height="450" Width="400">
     <UserControl.Resources>
         <obstkorb:BoolToColorConverter x:Key="BoolToColorConverter"/>
+
+        <!-- Stil für Eingabefelder ohne doppelte Borders -->
+        <Style x:Key="InputFieldStyle" TargetType="TextBox">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="Foreground" Value="Black"/>
+        </Style>
+
+        <Style x:Key="PasswordFieldStyle" TargetType="PasswordBox">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="Foreground" Value="Black"/>
+        </Style>
     </UserControl.Resources>
-    <Grid Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
 
-        <!-- Kundenname Eingabe -->
-        <TextBlock Text="Kundenname:" Grid.Row="0" Margin="0,0,0,5"/>
-        <TextBox Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Margin="0,0,0,10"/>
+    <!-- Äußerer Border für das gesamte Layout -->
+    <Border Background="#F7F7F7" Padding="20" CornerRadius="10" BorderBrush="#DDDDDD" BorderThickness="2">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <!-- Überschrift -->
+                <RowDefinition Height="Auto"/>
+                <!-- Kundenname Label -->
+                <RowDefinition Height="Auto"/>
+                <!-- Kundenname Eingabebox -->
+                <RowDefinition Height="Auto"/>
+                <!-- Passwort Label -->
+                <RowDefinition Height="Auto"/>
+                <!-- Passwort Eingabebox -->
+                <RowDefinition Height="Auto"/>
+                <!-- Passwort wiederholen Label -->
+                <RowDefinition Height="Auto"/>
+                <!-- Passwort wiederholen Eingabebox -->
+                <RowDefinition Height="Auto"/>
+                <!-- Passwortregeln -->
+                <RowDefinition Height="*"/>
+                <!-- Platzhalter -->
+                <RowDefinition Height="Auto"/>
+                <!-- Registrieren Button -->
+            </Grid.RowDefinitions>
 
-        <!-- Passwort Eingabe -->
-        <TextBlock Text="Passwort:" Grid.Row="2" Margin="0,0,0,5"/>
-        <PasswordBox local:PasswordBoxHelper.BoundPassword="{Binding Password, Mode=TwoWay}" Grid.Row="3" Margin="0,0,0,10"/>
+            <!-- Überschrift -->
+            <TextBlock Text="Registrieren"
+                       Grid.Row="0"
+                       FontSize="22"
+                       FontWeight="Bold"
+                       Foreground="#2C3E50"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,20"/>
 
-        <!-- Passwort wiederholen -->
-        <TextBlock Text="Passwort wiederholen:" Grid.Row="4" Margin="0,0,0,5"/>
-        <PasswordBox local:PasswordBoxHelper.BoundPassword="{Binding ConfirmPassword, Mode=TwoWay}" Grid.Row="5" Margin="0,0,0,10"/>
+            <!-- Kundenname Label -->
+            <TextBlock Text="Kundenname:"
+                       Grid.Row="1"
+                       FontWeight="SemiBold"
+                       Foreground="#34495E"
+                       Margin="0,0,0,5"/>
 
-        <!-- Passwort Regeln -->
-        <StackPanel Grid.Row="6" Margin="0,10,0,0">
-            <TextBlock Text="Passwort muss mindestens:" FontWeight="Bold"/>
-            <TextBlock Text="8 Zeichen lang sein" Foreground="{Binding IsMinLengthMet, Converter={StaticResource BoolToColorConverter}}"/>
-            <TextBlock Text="Eine Zahl enthalten" Foreground="{Binding IsNumberMet, Converter={StaticResource BoolToColorConverter}}"/>
-            <TextBlock Text="Ein Sonderzeichen enthalten" Foreground="{Binding IsSpecialCharacterMet, Converter={StaticResource BoolToColorConverter}}"/>
-        </StackPanel>
+            <!-- Kundenname Eingabebox -->
+            <Border Background="#FFFFFF" CornerRadius="5" BorderBrush="#CCCCCC" BorderThickness="1" Grid.Row="2" Margin="0,5,0,15">
+                <TextBox Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
+                         Style="{StaticResource InputFieldStyle}"/>
+            </Border>
 
-        <Button Content="Registrieren" Command="{Binding SignUpCommand}" Grid.Row="7" Width="150" HorizontalAlignment="Right"/>
-    </Grid>
+            <!-- Passwort Label -->
+            <TextBlock Text="Passwort:"
+                       Grid.Row="3"
+                       FontWeight="SemiBold"
+                       Foreground="#34495E"
+                       Margin="0,0,0,5"/>
+
+            <!-- Passwort Eingabebox -->
+            <Border Background="#FFFFFF" CornerRadius="5" BorderBrush="#CCCCCC" BorderThickness="1" Grid.Row="4" Margin="0,5,0,15">
+                <PasswordBox Style="{StaticResource PasswordFieldStyle}"
+                             local:PasswordBoxHelper.BoundPassword="{Binding Password, Mode=TwoWay}"/>
+            </Border>
+
+            <!-- Passwort wiederholen Label -->
+            <TextBlock Text="Passwort wiederholen:"
+                       Grid.Row="5"
+                       FontWeight="SemiBold"
+                       Foreground="#34495E"
+                       Margin="0,0,0,5"/>
+
+            <!-- Passwort wiederholen Eingabebox -->
+            <Border Background="#FFFFFF" CornerRadius="5" BorderBrush="#CCCCCC" BorderThickness="1" Grid.Row="6" Margin="0,5,0,15">
+                <PasswordBox Style="{StaticResource PasswordFieldStyle}"
+                             local:PasswordBoxHelper.BoundPassword="{Binding ConfirmPassword, Mode=TwoWay}"/>
+            </Border>
+
+            <!-- Passwortregeln -->
+            <StackPanel Grid.Row="7" Margin="0,10,0,0">
+                <TextBlock Text="Passwort-Anforderungen:" FontWeight="Bold" Foreground="#2C3E50" Margin="0,0,0,5"/>
+                <TextBlock Text="• Mindestens 8 Zeichen" Foreground="{Binding IsMinLengthMet, Converter={StaticResource BoolToColorConverter}}" Margin="10,2"/>
+                <TextBlock Text="• Eine Zahl enthalten" Foreground="{Binding IsNumberMet, Converter={StaticResource BoolToColorConverter}}" Margin="10,2"/>
+                <TextBlock Text="• Ein Sonderzeichen enthalten" Foreground="{Binding IsSpecialCharacterMet, Converter={StaticResource BoolToColorConverter}}" Margin="10,2"/>
+            </StackPanel>
+
+            <!-- Registrieren Button -->
+            <Button Content="Registrieren"
+                    Grid.Row="9"
+                    Width="150"
+                    Height="40"
+                    Background="#2980B9"
+                    Foreground="White"
+                    FontSize="14"
+                    FontWeight="Bold"
+                    BorderBrush="Transparent"
+                    HorizontalAlignment="Right"
+                    Command="{Binding SignUpCommand}"
+                    Cursor="Hand"/>
+        </Grid>
+    </Border>
 </UserControl>

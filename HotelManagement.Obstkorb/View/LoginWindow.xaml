@@ -23,11 +23,6 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
-        <!-- Sign In und Sign Up Buttons -->
-        <Button Content="Sign In" Command="{Binding ShowSignInViewCommand}" Grid.Row="0" Width="150" Margin="5"/>
-        <Button Content="Sign Up" Command="{Binding ShowSignUpViewCommand}" Grid.Row="1" Width="150" Margin="5"/>
-
         <!-- ContentControl, um die aktuelle Ansicht anzuzeigen -->
         <ContentControl Content="{Binding CurrentView}" Grid.Row="2" Margin="5"/>
     </Grid>
