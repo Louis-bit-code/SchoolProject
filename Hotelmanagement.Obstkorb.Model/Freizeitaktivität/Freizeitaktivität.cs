@@ -1,8 +1,8 @@
 ﻿namespace Hotelmanagement.Obstkorb.Model.Freizeitaktivität;
 
-public class Freizeitaktivität : User
+public class Freizeitaktivität 
 {
-    public Freizeitaktivität(string username, string name, string beschreibung, string preis) : base(username)
+    public Freizeitaktivität( string name, string beschreibung, string preis)
     {
         Name = name;
         Beschreibung = beschreibung;

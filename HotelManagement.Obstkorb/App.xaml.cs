@@ -1,4 +1,7 @@
 ﻿using Hotelmanagement.Obstkorb.DatabaseInterface;
+using Hotelmanagement.Obstkorb.Model;
+using Hotelmanagement.Obstkorb.Model.Freizeitaktivität;
+using Hotelmanagement.Obstkorb.Model.Hotel;
 using HotelManagement.Obstkorb.View;
 using HotelManagement.Obstkorb.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,49 +30,26 @@ namespace HotelManagement.Obstkorb
             services.AddSingleton<IDatabaseConnectionFactory>(new DatabaseConnectionFactory(connectionString));
 
             // Stores
-            services.AddScoped<IUserStore, UserStore>();
             services.AddScoped<IHotelBuchungStore, HotelbuchungStore>();
+            services.AddScoped<IHotelZimmerStore, HotelZimmerStore>();
 
             // ViewModels
-            services.AddTransient<LoginViewModel>();
-            services.AddTransient<SignInViewModel>();
-            services.AddTransient<SignUpViewModel>();
+           
             services.AddTransient<HomeViewModel>();
             services.AddTransient<MainViewModel>();
+            services.AddTransient<BookingOverviewViewModel>();
+            services.AddTransient<Freizeitaktivität>();
+            services.AddTransient<FreizeitAktivitätsBuchung>();
+            services.AddTransient<Hotelbuchung>();
+            services.AddTransient<HotelBuchungen>();
+            services.AddTransient<Hotelzimmer>();
+            services.AddTransient<Preis>();
+            services.AddTransient<Zusatzoptionen>();
+            services.AddTransient<Kunde>();
 
             // Views
             services.AddTransient<MainWindow>();
-            services.AddTransient<LoginWindow>(); // Stelle sicher, dass LoginWindow als Service registriert ist
         }
 
-        private void Application_Startup(object sender, StartupEventArgs e)
-        {
-            // Abrufen des Login-Fensters über den ServiceProvider
-            var loginWindow = _serviceProvider.GetService<LoginWindow>();
-
-            while (true) // Schleife für wiederholte Login-Versuche
-            {
-                if (loginWindow != null && loginWindow.ShowDialog() == true)
-                {
-                    // Wenn Login erfolgreich, zeige MainWindow/HomeView
-                    var mainWindow = _serviceProvider.GetService<MainWindow>();
-                    if (mainWindow != null)
-                    {
-                        mainWindow.DataContext = _serviceProvider.GetService<HomeViewModel>();
-                        mainWindow.Show();
-                        break; // Beende die Schleife, da Login erfolgreich war
-                    }
-                }
-                else
-                {
-                    // Zeige Fehlermeldung und lasse das LoginWindow geöffnet
-                    MessageBox.Show("Anmeldung fehlgeschlagen. Bitte versuchen Sie es erneut.",
-                        "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
-
-                    // Login-Fenster bleibt offen, um einen erneuten Versuch zu ermöglichen
-                    continue;
-                }
-            }
-        }
     }
 }

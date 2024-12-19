@@ -6,12 +6,11 @@ namespace Hotelmanagement.Obstkorb.DatabaseInterface;
 public abstract class BaseStore
 {
     private readonly IDatabaseConnectionFactory ConnectionFactory;
-    protected readonly User UserContext;
+   
 
-    protected BaseStore(IDatabaseConnectionFactory connectionFactory, User userContext)
+    protected BaseStore(IDatabaseConnectionFactory connectionFactory)
     {
         ConnectionFactory = connectionFactory;
-        UserContext = userContext;
     }
 
     protected SqlConnection GetOpenConnection()
