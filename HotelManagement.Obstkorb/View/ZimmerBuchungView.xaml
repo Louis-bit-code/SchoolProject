@@ -1,14 +1,115 @@
-﻿<Window x:Class="HotelManagement.Obstkorb.View.ZimmerBuchungView"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Zimmer Buchung" Height="450" Width="800">
-    <Grid>
-        <ComboBox ItemsSource="{Binding HotelzimmerListe}" 
-                  DisplayMemberPath="Zimmernummer" 
-                  SelectedValuePath="Id"
-                  SelectedValue="{Binding SelectedZimmerId}" 
-                  HorizontalAlignment="Left" VerticalAlignment="Top" Width="200"/>
+﻿<UserControl x:Class="HotelManagement.Obstkorb.View.ZimmerBuchungView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Height="600" Width="800">
+    <UserControl.Resources>
+        <!-- Stil für Buttons -->
+        <Style x:Key="PrimaryButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#2980B9"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
 
-        <Button Command="{Binding BookRoomCommand}" Content="Zimmer buchen" Width="100" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="220,0,0,0"/>
+        <!-- Stil für Eingabefelder -->
+        <Style x:Key="RoundedInputBoxStyle" TargetType="Border">
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="BorderBrush" Value="#CCCCCC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Margin" Value="0,5,0,15"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Background="#F7F7F7" Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Zimmerbuchungsformular -->
+        <StackPanel Grid.Column="0" Margin="20" VerticalAlignment="Top">
+            <!-- Überschrift -->
+            <TextBlock Text="Zimmer buchen"
+                       FontSize="24"
+                       FontWeight="Bold"
+                       Foreground="#2C3E50"
+                       Margin="0,0,0,20"/>
+
+            <!-- Zimmerkategorie -->
+            <TextBlock Text="Zimmerkategorie:" FontWeight="SemiBold" Foreground="#34495E"/>
+            <Border Style="{StaticResource RoundedInputBoxStyle}">
+                <ComboBox ItemsSource="{Binding RoomCategories}"
+                          SelectedItem="{Binding SelectedRoomCategory}"
+                          Background="Transparent"
+                          Padding="8"/>
+            </Border>
+
+            <!-- Check-in Datum -->
+            <TextBlock Text="Check-in Datum:" FontWeight="SemiBold" Foreground="#34495E"/>
+            <Border Style="{StaticResource RoundedInputBoxStyle}">
+                <DatePicker SelectedDate="{Binding CheckInDate}"
+                            Padding="8"
+                            Background="Transparent"/>
+            </Border>
+
+            <!-- Check-out Datum -->
+            <TextBlock Text="Check-out Datum:" FontWeight="SemiBold" Foreground="#34495E"/>
+            <Border Style="{StaticResource RoundedInputBoxStyle}">
+                <DatePicker SelectedDate="{Binding CheckOutDate}"
+                            Padding="8"
+                            Background="Transparent"/>
+            </Border>
+
+            <!-- Anzahl der Gäste -->
+            <TextBlock Text="Anzahl der Gäste:" FontWeight="SemiBold" Foreground="#34495E"/>
+            <Border Style="{StaticResource RoundedInputBoxStyle}">
+                <TextBox Text="{Binding NumberOfGuests, UpdateSourceTrigger=PropertyChanged}"
+                         Background="Transparent"
+                         Padding="8"/>
+            </Border>
+
+            <!-- Buchung bestätigen Button -->
+            <Button Content="Jetzt buchen"
+                    Command="{Binding ConfirmBookingCommand}"
+                    Style="{StaticResource PrimaryButtonStyle}"
+                    Width="200"
+                    HorizontalAlignment="Left"
+                    Margin="0,20,0,0"/>
+        </StackPanel>
+
+        <!-- Buchungsübersicht -->
+        <Border Grid.Column="1" Background="White" CornerRadius="10" BorderBrush="#DDDDDD" BorderThickness="1" Padding="20">
+            <StackPanel>
+                <TextBlock Text="Buchungsübersicht"
+                           FontSize="20"
+                           FontWeight="Bold"
+                           Foreground="#2C3E50"
+                           Margin="0,0,0,20"/>
+
+                <!-- Zimmerkategorie -->
+                <TextBlock Text="Zimmerkategorie:" FontWeight="SemiBold" Foreground="#34495E"/>
+                <TextBlock Text="{Binding SelectedRoomCategory}" Margin="0,0,0,10"/>
+
+                <!-- Check-in Datum -->
+                <TextBlock Text="Check-in Datum:" FontWeight="SemiBold" Foreground="#34495E"/>
+                <TextBlock Text="{Binding CheckInDate, StringFormat=\{0:dd.MM.yyyy\}}" Margin="0,0,0,10"/>
+
+                <!-- Check-out Datum -->
+                <TextBlock Text="Check-out Datum:" FontWeight="SemiBold" Foreground="#34495E"/>
+                <TextBlock Text="{Binding CheckOutDate, StringFormat=\{0:dd.MM.yyyy\}}" Margin="0,0,0,10"/>
+
+                <!-- Anzahl der Gäste -->
+                <TextBlock Text="Anzahl der Gäste:" FontWeight="SemiBold" Foreground="#34495E"/>
+                <TextBlock Text="{Binding NumberOfGuests}" Margin="0,0,0,10"/>
+
+                <!-- Gesamtpreis -->
+                <TextBlock Text="Gesamtpreis:" FontWeight="Bold" Foreground="#2C3E50" Margin="0,20,0,5"/>
+                <TextBlock Text="{Binding TotalPrice, StringFormat=\{0:C\}}" FontSize="16" FontWeight="Bold" Foreground="#27AE60"/>
+            </StackPanel>
+        </Border>
     </Grid>
-</Window>
+</UserControl>

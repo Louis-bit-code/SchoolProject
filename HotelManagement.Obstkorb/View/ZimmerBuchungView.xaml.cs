@@ -17,7 +17,7 @@ namespace HotelManagement.Obstkorb.View
     /// <summary>
     /// Interaktionslogik für ZimmerBuchungView.xaml
     /// </summary>
-    public partial class ZimmerBuchungView : Window
+    public partial class ZimmerBuchungView
     {
         public ZimmerBuchungView()
         {
