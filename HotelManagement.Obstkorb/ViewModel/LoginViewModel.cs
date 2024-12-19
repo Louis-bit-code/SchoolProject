@@ -1,46 +1,47 @@
-﻿using Hotelmanagement.Obstkorb.DatabaseInterface;
+﻿using System.Windows;
 using System.Windows.Input;
+using Hotelmanagement.Obstkorb.DatabaseInterface;
 
 namespace HotelManagement.Obstkorb.ViewModel
 {
     public class LoginViewModel : BaseViewModel
     {
-        private object _currentView;
         private readonly IUserStore _userStore;
 
-        public object CurrentView
-        {
-            get { return _currentView; }
-            set
-            {
-                SetProperty(ref _currentView, value);
-            }
-        }
+        public string Username { get; set; }
+        public string Password { get; set; }
 
-        public ICommand ShowSignInViewCommand { get; }
+        public ICommand LoginCommand { get; }
         public ICommand ShowSignUpViewCommand { get; }
 
-        // Parameterloser Konstruktor, der DefaultUserStore verwendet
-        public LoginViewModel(IUserStore userStore)
+        public LoginViewModel(IUserStore userStore, SignUpViewModel signUpViewModel)
         {
             _userStore = userStore;
 
-            // Initialisierung der Commands
-            ShowSignInViewCommand = new RelayCommand<object>(o => ShowSignInView());
-            ShowSignUpViewCommand = new RelayCommand<object>(o => ShowSignUpView());
-
-            // Standardmäßig die Sign-In-Ansicht anzeigen
-            ShowSignInView();
+            LoginCommand = new RelayCommand<object>(_ => PerformLogin());
+            ShowSignUpViewCommand = new RelayCommand<object>(_ => ShowSignUp(signUpViewModel));
         }
 
-        private void ShowSignInView()
+        private void PerformLogin()
         {
-            CurrentView = new SignInViewModel(_userStore);
+            // Beispiel: Authentifizierung basierend auf Benutzername und Passwort
+            var user = _userStore.GetUserByUsername(Username);
+            if (user != null && user.Pa
+            ssword  == Password) // Achtung: Passwort-Hashing verwenden!
+            {
+                MessageBox.Show("Login erfolgreich!", "Erfolg", MessageBoxButton.OK, MessageBoxImage.Information);
+                // Hier könnte die Navigation zur HomeView ausgelöst werden
+                Application.Current.MainWindow.DialogResult = true;
+            }
+            else
+            {
+                MessageBox.Show("Ungültiger Benutzername oder Passwort.", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
-        private void ShowSignUpView()
+        private void ShowSignUp(SignUpViewModel signUpViewModel)
         {
-            CurrentView = new SignUpViewModel(_userStore);
+            CurrentView = signUpViewModel;
         }
     }
 }

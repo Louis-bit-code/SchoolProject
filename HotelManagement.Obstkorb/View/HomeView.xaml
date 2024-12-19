@@ -19,5 +19,8 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
+        <Button Content="Meine Buchungen anzeigen" 
+                Command="{Binding ShowBookingOverviewCommand}" 
+                VerticalAlignment="Bottom"/>
     </Grid>
 </UserControl>

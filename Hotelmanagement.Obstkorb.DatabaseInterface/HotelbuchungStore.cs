@@ -40,4 +40,9 @@ public class HotelbuchungStore : BaseStore, IHotelBuchungStore
     {
         throw new NotImplementedException();
     }
+
+    public IEnumerable<Hotelbuchung> GetBookingsByUserId(object id)
+    {
+        throw new NotImplementedException();
+    }
 }

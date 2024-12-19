@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="HotelManagement.Obstkorb.View.BookingOverviewView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:HotelManagement.Obstkorb.View"
+             Height="400" Width="600">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Button to Refresh Bookings -->
+        <Button Content="Aktualisieren" Command="{Binding RefreshCommand}" Grid.Row="0" HorizontalAlignment="Right" Margin="0,0,0,10" />
+
+        <!-- DataGrid to Display User Bookings -->
+        <DataGrid ItemsSource="{Binding UserBookings}" AutoGenerateColumns="False" IsReadOnly="True" Grid.Row="1">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Zimmernummer" Binding="{Binding Zimmernummer}" Width="*" />
+                <DataGridTextColumn Header="Check-in" Binding="{Binding CheckInDate, StringFormat=d}" Width="*" />
+                <DataGridTextColumn Header="Check-out" Binding="{Binding CheckOutDate, StringFormat=d}" Width="*" />
+                <DataGridTextColumn Header="Preis (€)" Binding="{Binding Price}" Width="*" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace HotelManagement.Obstkorb.View
 {
     /// <summary>
-    /// Interaktionslogik für SignUpView.xaml
+    /// Interaktionslogik für BookingOverviewView.xaml
     /// </summary>
-    public partial class SignUpView : UserControl
+    public partial class BookingOverviewView : UserControl
     {
-        public SignUpView()
+        public BookingOverviewView()
         {
             InitializeComponent();
         }

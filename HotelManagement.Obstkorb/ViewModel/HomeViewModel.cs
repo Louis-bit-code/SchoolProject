@@ -1,43 +1,58 @@
-﻿using Hotelmanagement.Obstkorb.Model;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.Windows.Input;
+using Hotelmanagement.Obstkorb.Model;
 using Hotelmanagement.Obstkorb.DatabaseInterface;
 using Hotelmanagement.Obstkorb.Model.Hotel;
 
-namespace HotelManagement.Obstkorb.ViewModel;
-
-public class HomeViewModel : BaseViewModel
+namespace HotelManagement.Obstkorb.ViewModel
 {
-    private readonly IHotelBuchungStore _bookingStore;
-    private readonly User _user;
-
-    public ObservableCollection<Hotelbuchung> RoomStatusList { get; set; }
-
-    public HomeViewModel(IHotelBuchungStore bookingStore, User user)
+    public class HomeViewModel : BaseViewModel
     {
-        _bookingStore = bookingStore;
-        _user = user;
+        // Property für die aktuelle Ansicht
+        private object _currentView;
+        public object CurrentView
+        {
+            get => _currentView;
+            set => SetProperty(ref _currentView, value);
+        }
 
-        // Initiale Daten laden
-        LoadRoomStatuses();
+        // Property für die Zimmerliste
+        private ObservableCollection<Hotelzimmer> _roomStatusList;
+        public ObservableCollection<Hotelzimmer> RoomStatusList
+        {
+            get => _roomStatusList;
+            set => SetProperty(ref _roomStatusList, value);
+        }
+
+        // Command zur Anzeige der Buchungsübersicht
+        public ICommand ShowBookingOverviewCommand { get; }
+
+        // Abhängigkeiten
+        private readonly IHotelZimmerStore _hotelZimmerStore;
+
+        // Konstruktor mit Abhängigkeiten
+        public HomeViewModel(IHotelZimmerStore hotelZimmerStore, BookingOverviewViewModel bookingOverviewViewModel)
+        {
+            _hotelZimmerStore = hotelZimmerStore;
+
+            // Command initialisieren
+            ShowBookingOverviewCommand = new RelayCommand<object>(_ => ShowBookingOverview(bookingOverviewViewModel));
+
+            // Initiale Daten laden
+            LoadRoomStatuses();
+        }
+
+        // Methode zum Laden der Zimmerdaten
+        private async Task LoadRoomStatuses()
+        {
+            var rooms =  await _hotelZimmerStore.GetAllRoomsAsync(); // Annahme: GetAllRooms() liefert alle Hotelzimmer
+            RoomStatusList = new ObservableCollection<Hotelzimmer>(rooms);
+        }
+
+            // Methode zur Anzeige der Buchungsübersicht
+            private void ShowBookingOverview(BookingOverviewViewModel bookingOverviewViewModel)
+            {
+                CurrentView = bookingOverviewViewModel;
+            }
+        }
     }
-
-    public void LoadRoomStatuses()
-    {
-        var bookings = _bookingStore.GetAllBookings();
-        var roomStatusList = bookings.Select(booking => new Hotelbuchung(_user.Username,booking.Preis,booking.Von,booking.Bis,booking.Gebucht, Convert.ToBoolean(booking.Gebucht)
-            ? "Frei"
-            : "Gebucht")
-        ).ToList();
-
-        RoomStatusList = new ObservableCollection<Hotelbuchung>(roomStatusList);
-        OnPropertyChanged(nameof(RoomStatusList));
-    }
-
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    protected virtual void OnPropertyChanged(string propertyName)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
-}

@@ -8,4 +8,5 @@ public interface IHotelBuchungStore
     void BookRoom(int roomId, DateTime bookingStart, DateTime bookingEnd);
 
     IEnumerable<Hotelbuchung> GetAllBookings();
+    IEnumerable<Hotelbuchung> GetBookingsByUserId(object id);
 }

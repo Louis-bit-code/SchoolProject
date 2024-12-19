@@ -16,6 +16,7 @@ public class RelayCommand<T> : ICommand
 
     public bool CanExecute(object parameter)
     {
+        // Wenn _canExecute nicht gesetzt ist, wird standardmäßig true zurückgegeben
         return _canExecute == null || _canExecute((T)parameter);
     }
 

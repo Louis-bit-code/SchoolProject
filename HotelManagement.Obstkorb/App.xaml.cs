@@ -44,19 +44,31 @@ namespace HotelManagement.Obstkorb
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            // LoginWindow wird über den ServiceProvider instanziiert
+            // Abrufen des Login-Fensters über den ServiceProvider
             var loginWindow = _serviceProvider.GetService<LoginWindow>();
 
-            if (loginWindow != null && loginWindow.ShowDialog() == true)
+            while (true) // Schleife für wiederholte Login-Versuche
             {
-                // Wenn Login erfolgreich ist, zeige MainWindow
-                var mainWindow = _serviceProvider.GetService<MainWindow>();
-                mainWindow?.Show();
-            }
-            else
-            {
-                // Falls Login abgebrochen oder fehlgeschlagen, beende die App
-                Current.Shutdown();
+                if (loginWindow != null && loginWindow.ShowDialog() == true)
+                {
+                    // Wenn Login erfolgreich, zeige MainWindow/HomeView
+                    var mainWindow = _serviceProvider.GetService<MainWindow>();
+                    if (mainWindow != null)
+                    {
+                        mainWindow.DataContext = _serviceProvider.GetService<HomeViewModel>();
+                        mainWindow.Show();
+                        break; // Beende die Schleife, da Login erfolgreich war
+                    }
+                }
+                else
+                {
+                    // Zeige Fehlermeldung und lasse das LoginWindow geöffnet
+                    MessageBox.Show("Anmeldung fehlgeschlagen. Bitte versuchen Sie es erneut.",
+                        "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                    // Login-Fenster bleibt offen, um einen erneuten Versuch zu ermöglichen
+                    continue;
+                }
             }
         }
     }
