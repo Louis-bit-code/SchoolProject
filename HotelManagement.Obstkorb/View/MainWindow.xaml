@@ -63,7 +63,18 @@
                                 <GridViewColumn Header="Buchungsnummer" DisplayMemberBinding="{Binding Buchungsnummer}" Width="150" />
                                 <GridViewColumn Header="Kunde" DisplayMemberBinding="{Binding KundeName}" Width="200" />
                                 <GridViewColumn Header="Zimmer" DisplayMemberBinding="{Binding Zimmernummer}" Width="150" />
-                                <GridViewColumn Header="Zeitraum" DisplayMemberBinding="{Binding Zeitraum}" Width="200" />
+                                <GridViewColumn Header="Zeitraum" Width="250">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding Von, StringFormat='{}{0:dd.MM.yyyy}'}" />
+                                                <TextBlock Text=" bis " />
+                                                <TextBlock Text="{Binding Bis, StringFormat='{}{0:dd.MM.yyyy}'}" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Preis" DisplayMemberBinding="{Binding Preis_in_Euro}" Width="100" />
                             </GridView>
                         </ListView.View>
                     </ListView>

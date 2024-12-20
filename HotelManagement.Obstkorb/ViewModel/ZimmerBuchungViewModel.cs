@@ -85,13 +85,7 @@ namespace HotelManagement.Obstkorb.ViewModel
 
         private void LoadData()
         {
-            // Mock data for demonstration purposes (replace with actual data fetching)
-            RoomCategories = new ObservableCollection<string> { "Einzelzimmer", "Doppelzimmer", "Suite" };
-            Customers = new ObservableCollection<string> { "Max Mustermann", "Lisa Müller", "John Doe" };
-            Prices = new ObservableCollection<string> { "50 EUR", "100 EUR", "150 EUR" };
-            OnPropertyChanged(nameof(RoomCategories));
-            OnPropertyChanged(nameof(Customers));
-            OnPropertyChanged(nameof(Prices));
+            _buchungStore.GetBuchungen();
         }
 
         private bool CanConfirmBooking()

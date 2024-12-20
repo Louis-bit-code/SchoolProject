@@ -33,19 +33,11 @@ namespace HotelManagement.Obstkorb.ViewModel
             AddBookingCommand = new RelayCommand(AddBooking);
         }
 
-        private async void LoadBuchungen()
+        private void LoadBuchungen()
         {
-            try
-            {
-                var buchungen = await Task.Run(() => _buchungStore.GetBuchungen());
-                RecentBookings = new ObservableCollection<dynamic>(buchungen);
-                OnPropertyChanged(nameof(RecentBookings));
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Fehler beim Laden der Buchungen: {ex.Message}", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
-                RecentBookings = new ObservableCollection<dynamic>();
-            }
+            var buchungen = _buchungStore.GetBuchungen();
+            RecentBookings = new ObservableCollection<dynamic>(buchungen);
+            OnPropertyChanged(nameof(RecentBookings));
         }
 
         private void ShowZimmerbuchungView()
