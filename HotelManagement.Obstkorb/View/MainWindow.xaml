@@ -28,8 +28,6 @@
                                 Background="#4CAF50" Foreground="White" FontWeight="Bold" />
                         <Button Content="Freizeitangebote" Width="150" Height="40" Margin="10" Command="{Binding ShowFreizeitaktivitätenViewCommand}" 
                                 Background="#2196F3" Foreground="White" FontWeight="Bold" />
-                        <Button Content="Kundendaten" Width="150" Height="40" Margin="10" Command="{Binding ShowKundendatenViewCommand}" 
-                                Background="#FFC107" Foreground="White" FontWeight="Bold" />
                     </StackPanel>
 
                     <!-- Statistiken -->
