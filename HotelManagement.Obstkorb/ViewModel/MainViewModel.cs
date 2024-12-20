@@ -1,45 +1,74 @@
-﻿using HotelManagement.Obstkorb.View;
-using System.ComponentModel;
+﻿using HotelManagement.Obstkorb.DatabaseInterface;
+using HotelManagement.Obstkorb.View;
+using System;
+using System.Collections.ObjectModel;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace HotelManagement.Obstkorb.ViewModel;
-
-public class MainViewModel : BaseViewModel
+namespace HotelManagement.Obstkorb.ViewModel
 {
-    private object _currentView;
-
-    public object CurrentView
+    public class MainViewModel : BaseViewModel
     {
-        get { return _currentView; }
-        set
+        private readonly BuchungStore _buchungStore;
+        private readonly Func<ZimmerBuchungViewModel> _zimmerBuchungViewModelFactory;
+
+        public ObservableCollection<dynamic> RecentBookings { get; private set; }
+        public ICommand ShowZimmerbuchungViewCommand { get; }
+        public ICommand AddBookingCommand { get; }
+
+        public Guid SelectedCustomerId { get; set; }
+        public Guid SelectedPriceId { get; set; }
+        public DateTime CheckInDate { get; set; }
+        public DateTime CheckOutDate { get; set; }
+        public int SelectedRoomNumber { get; set; }
+
+        public MainViewModel(BuchungStore buchungStore, Func<ZimmerBuchungViewModel> zimmerBuchungViewModelFactory)
         {
-            SetProperty(ref _currentView, value);
+            _buchungStore = buchungStore;
+            _zimmerBuchungViewModelFactory = zimmerBuchungViewModelFactory;
+            LoadBuchungen();
+
+            ShowZimmerbuchungViewCommand = new RelayCommand(ShowZimmerbuchungView);
+            AddBookingCommand = new RelayCommand(AddBooking);
         }
-    }
 
-    public ICommand ShowFreizeitaktivitätenViewCommand { get; }
-    public ICommand ShowAutobuchungViewCommand { get; }
+        private async void LoadBuchungen()
+        {
+            try
+            {
+                var buchungen = await Task.Run(() => _buchungStore.GetBuchungen());
+                RecentBookings = new ObservableCollection<dynamic>(buchungen);
+                OnPropertyChanged(nameof(RecentBookings));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Fehler beim Laden der Buchungen: {ex.Message}", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+                RecentBookings = new ObservableCollection<dynamic>();
+            }
+        }
 
-    public MainViewModel()
-    {
-        // Initiale Ansicht
-        ShowFreizeitaktivitätenViewCommand = new RelayCommand<object>(o => ShowFreizeitAktivitätenView());
-        ShowAutobuchungViewCommand = new RelayCommand<object>(o => ShowAutoBuchungView());
+        private void ShowZimmerbuchungView()
+        {
+            var viewModel = _zimmerBuchungViewModelFactory();
+            var container = Application.Current.MainWindow.FindName("ContentControl") as ContentControl;
+            if (container != null)
+            {
+                container.Content = new ZimmerBuchungView { DataContext = viewModel };
+            }
+        }
 
-        ShowFreizeitAktivitätenView(); // Standardmäßig Freizeitaktivitäten anzeigen
-    }
-
-    private void ShowFreizeitAktivitätenView()
-    {
-        var view = new FreizeitAktivitätenView();
-        view.DataContext = new FreizeitaktivitätenViewModel();
-        CurrentView = view;
-    }
-
-    private void ShowAutoBuchungView()
-    {
-        var view = new AutoBuchungView();
-        view.DataContext = new AutobuchungViewModel();
-        CurrentView = view;
+        private void AddBooking()
+        {
+            try
+            {
+                _buchungStore.AddBuchung(SelectedCustomerId, SelectedPriceId, CheckInDate, CheckOutDate, SelectedRoomNumber);
+                LoadBuchungen(); // Aktualisiere die Liste der Buchungen
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Fehler beim Erstellen der Buchung: {ex.Message}", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
     }
 }

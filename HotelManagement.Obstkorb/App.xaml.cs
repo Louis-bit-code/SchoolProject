@@ -1,4 +1,5 @@
 ﻿using Hotelmanagement.Obstkorb.DatabaseInterface;
+using HotelManagement.Obstkorb.DatabaseInterface;
 using Hotelmanagement.Obstkorb.Model;
 using Hotelmanagement.Obstkorb.Model.Freizeitaktivität;
 using Hotelmanagement.Obstkorb.Model.Hotel;
@@ -23,19 +24,19 @@ namespace HotelManagement.Obstkorb
 
         private void ConfigureServices(IServiceCollection services)
         {
-            var connectionString =
-                "Server=DEIN_SERVER;Database=DEINE_DATENBANK;User Id=DEIN_BENUTZER;Password=DEIN_PASSWORT;";
+            // Registrierung der Verbindungszeichenfolge
+            services.AddSingleton<string>(provider => "Server=DESKTOP-LOUIS;Database=Projekt;Integrated Security=True;Encrypt=True;TrustServerCertificate=True;");
 
-            // Datenbankverbindung registrieren
-            services.AddSingleton<IDatabaseConnectionFactory>(new DatabaseConnectionFactory(connectionString));
 
-            // Stores
-            services.AddScoped<IHotelBuchungStore, HotelbuchungStore>();
-            services.AddScoped<IHotelZimmerStore, HotelZimmerStore>();
+            // Registrierung des Stores
+            services.AddSingleton<BuchungStore>();
+
+            services.AddTransient<ZimmerBuchungViewModel>(); // ViewModel selbst registrieren
+            services.AddTransient<Func<ZimmerBuchungViewModel>>(provider => () => provider.GetRequiredService<ZimmerBuchungViewModel>());
+
 
             // ViewModels
-           
-            services.AddTransient<HomeViewModel>();
+
             services.AddTransient<MainViewModel>();
             services.AddTransient<BookingOverviewViewModel>();
             services.AddTransient<Freizeitaktivität>();
@@ -48,8 +49,32 @@ namespace HotelManagement.Obstkorb
             services.AddTransient<Kunde>();
 
             // Views
-            services.AddTransient<MainWindow>();
+            services.AddSingleton<MainWindow>();
+
         }
+
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            try
+            {
+                var mainWindow = _serviceProvider.GetService<MainWindow>();
+                if (mainWindow != null)
+                {
+                    mainWindow.DataContext = _serviceProvider.GetService<MainViewModel>();
+                    mainWindow.Show();
+                }
+                else
+                {
+                    throw new InvalidOperationException("MainWindow konnte nicht erstellt werden.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Fehler beim Starten der Anwendung: {ex.Message}", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+                Shutdown();
+            }
+        }
+
 
     }
 }

@@ -3,10 +3,18 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Hotel Management" Height="600" Width="900"
         Background="#F5F5F5" MinHeight="500" MinWidth="800">
-    <DockPanel>
-        <!-- Dashboard Inhalt -->
+    <Grid>
+        <!-- Grid Layout mit zwei Zeilen -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*" />
+            <!-- ListView nimmt 2 Teile der Höhe ein -->
+            <RowDefinition Height="3*" />
+            <!-- ContentControl nimmt 3 Teile der Höhe ein -->
+        </Grid.RowDefinitions>
+
+        <!-- Liste der Buchungen -->
         <Border Background="White" CornerRadius="10" Margin="10" Padding="10" 
-                BorderBrush="#D1D1D1" BorderThickness="1">
+                BorderBrush="#D1D1D1" BorderThickness="1" Grid.Row="0">
             <ScrollViewer>
                 <StackPanel>
                     <!-- Header -->
@@ -49,12 +57,12 @@
 
                     <!-- Aktuelle Buchungen -->
                     <TextBlock Text="Aktuelle Buchungen" FontSize="18" FontWeight="SemiBold" Foreground="#444" Margin="0,10" />
-                    <ListView ItemsSource="{Binding RecentBookings}" Margin="0,5">
+                    <ListView ItemsSource="{Binding RecentBookings}" Margin="0,5" Height="Auto">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Buchungsnummer" DisplayMemberBinding="{Binding Buchungsnummer}" Width="150" />
-                                <GridViewColumn Header="Kunde" DisplayMemberBinding="{Binding Kunde}" Width="200" />
-                                <GridViewColumn Header="Zimmer" DisplayMemberBinding="{Binding Zimmer}" Width="150" />
+                                <GridViewColumn Header="Kunde" DisplayMemberBinding="{Binding KundeName}" Width="200" />
+                                <GridViewColumn Header="Zimmer" DisplayMemberBinding="{Binding Zimmernummer}" Width="150" />
                                 <GridViewColumn Header="Zeitraum" DisplayMemberBinding="{Binding Zeitraum}" Width="200" />
                             </GridView>
                         </ListView.View>
@@ -62,5 +70,8 @@
                 </StackPanel>
             </ScrollViewer>
         </Border>
-    </DockPanel>
+
+        <!-- Dynamischer Inhalt -->
+        <ContentControl x:Name="ContentControl" Margin="10" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+    </Grid>
 </Window>

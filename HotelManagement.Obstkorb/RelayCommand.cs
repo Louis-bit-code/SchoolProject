@@ -1,28 +1,27 @@
 ﻿using System;
 using System.Windows.Input;
 
-public class RelayCommand<T> : ICommand
+public class RelayCommand : ICommand
 {
-    private readonly Action<T> _execute;
-    private readonly Predicate<T> _canExecute;
+    private readonly Action _execute;
+    private readonly Func<bool> _canExecute;
 
-    public event EventHandler CanExecuteChanged;
-
-    public RelayCommand(Action<T> execute, Predicate<T> canExecute = null)
+    public RelayCommand(Action execute, Func<bool> canExecute = null)
     {
         _execute = execute ?? throw new ArgumentNullException(nameof(execute));
         _canExecute = canExecute;
     }
 
+    public event EventHandler CanExecuteChanged;
+
     public bool CanExecute(object parameter)
     {
-        // Wenn _canExecute nicht gesetzt ist, wird standardmäßig true zurückgegeben
-        return _canExecute == null || _canExecute((T)parameter);
+        return _canExecute == null || _canExecute();
     }
 
     public void Execute(object parameter)
     {
-        _execute((T)parameter);
+        _execute();
     }
 
     public void RaiseCanExecuteChanged()

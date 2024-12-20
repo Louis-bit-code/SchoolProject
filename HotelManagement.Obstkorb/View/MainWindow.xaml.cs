@@ -1,12 +1,15 @@
-﻿namespace HotelManagement.Obstkorb.View;
+﻿using HotelManagement.Obstkorb.ViewModel;
+
+namespace HotelManagement.Obstkorb.View;
 
 /// <summary>
 ///     Interaction logic for MainWindow.xaml
 /// </summary>
 public partial class MainWindow
 {
-    public MainWindow()
+    public MainWindow(MainViewModel viewModel)
     {
         InitializeComponent();
+        DataContext = viewModel;
     }
 }
