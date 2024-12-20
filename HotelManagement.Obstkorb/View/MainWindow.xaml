@@ -30,29 +30,6 @@
                                 Background="#2196F3" Foreground="White" FontWeight="Bold" />
                     </StackPanel>
 
-                    <!-- Statistiken -->
-                    <TextBlock Text="Statistiken" FontSize="18" FontWeight="SemiBold" Foreground="#444" Margin="0,20,0,10" />
-                    <UniformGrid Columns="3" Margin="0,0,0,10">
-                        <Border Background="#E3F2FD" Padding="10" CornerRadius="5" Margin="5">
-                            <StackPanel>
-                                <TextBlock Text="Aktive Buchungen" FontSize="14" Foreground="#666" />
-                                <TextBlock Text="42" FontSize="20" FontWeight="Bold" Foreground="#1E88E5" />
-                            </StackPanel>
-                        </Border>
-                        <Border Background="#F3E5F5" Padding="10" CornerRadius="5" Margin="5">
-                            <StackPanel>
-                                <TextBlock Text="Kundenregistrierungen" FontSize="14" Foreground="#666" />
-                                <TextBlock Text="15" FontSize="20" FontWeight="Bold" Foreground="#8E24AA" />
-                            </StackPanel>
-                        </Border>
-                        <Border Background="#E8F5E9" Padding="10" CornerRadius="5" Margin="5">
-                            <StackPanel>
-                                <TextBlock Text="Freizeitbuchungen" FontSize="14" Foreground="#666" />
-                                <TextBlock Text="8" FontSize="20" FontWeight="Bold" Foreground="#43A047" />
-                            </StackPanel>
-                        </Border>
-                    </UniformGrid>
-
                     <!-- Aktuelle Buchungen -->
                     <TextBlock Text="Aktuelle Buchungen" FontSize="18" FontWeight="SemiBold" Foreground="#444" Margin="0,10" />
                     <ListView ItemsSource="{Binding RecentBookings}" Margin="0,5" Height="Auto">
